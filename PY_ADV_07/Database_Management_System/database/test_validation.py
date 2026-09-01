@@ -1,14 +1,21 @@
+import pytest
+
 from validation import validate_employee_id, validate_salary
 
 
-try:
-    employee_id = int(input("Enter employee ID: "))
-    validate_employee_id(employee_id)
+def test_validate_employee_id():
+    assert validate_employee_id(1) == 1
 
-    salary = float(input("Enter salary: "))
-    validate_salary(salary)
 
-    print("Validation successful!")
+def test_validate_salary():
+    assert validate_salary(50000) == 50000
 
-except ValueError as error:
-    print("Validation error:", error)
+
+def test_invalid_employee_id():
+    with pytest.raises(ValueError):
+        validate_employee_id(-1)
+
+
+def test_invalid_salary():
+    with pytest.raises(ValueError):
+        validate_salary(-5000)
