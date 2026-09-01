@@ -1,2 +1,13 @@
 __pycache__/
 *.pyc
+.venv/
+venv/
+application.log
+
+Demo.py
+PY-ADV-03/
+PY_ADV_01/
+PY_ADV_02/
+PY_ADV_04/
+PY_ADV_06/
+Practical_Assessment/
