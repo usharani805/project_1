@@ -82,3 +82,13 @@ Python connects to PostgreSQL using the Psycopg 3 library.
 ## GitHub
 
 The project is maintained using Git and GitHub.
+## GitHub
+
+The project is maintained using Git and GitHub.
+
+## How to Run
+
+### 1. Install Dependencies
+
+```bash
+pip install psycopg pytest
