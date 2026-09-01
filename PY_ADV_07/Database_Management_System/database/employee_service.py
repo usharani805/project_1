@@ -1,31 +1,25 @@
 from connection import get_connection
 
 
-def create_employee(employee_id, employee_name, email, department, salary, department_id):
+def create_employee(name, email, department_id, salary):
     connection = get_connection()
 
     try:
         with connection.cursor() as cursor:
             cursor.execute("""
                 INSERT INTO employees
-                (employee_id, employee_name, email, department, salary, department_id)
-                VALUES (%s, %s, %s, %s, %s, %s);
-            """, (
-                employee_id,
-                employee_name,
-                email,
-                department,
-                salary,
-                department_id
-            ))
+                (employee_name, email, department_id, salary)
+                VALUES (%s, %s, %s, %s)
+                RETURNING employee_id;
+            """, (name, email, department_id, salary))
 
-        connection.commit()
-        return True
+            employee_id = cursor.fetchone()[0]
+            connection.commit()
+            return employee_id
 
-    except Exception as error:
+    except Exception:
         connection.rollback()
-        print("Error creating employee:", error)
-        return False
+        raise
 
     finally:
         connection.close()
@@ -37,7 +31,13 @@ def get_employee(employee_id):
     try:
         with connection.cursor() as cursor:
             cursor.execute("""
-                SELECT *
+                SELECT
+                    employee_id,
+                    employee_name,
+                    email,
+                    department,
+                    salary,
+                    department_id
                 FROM employees
                 WHERE employee_id = %s;
             """, (employee_id,))
@@ -54,9 +54,15 @@ def get_all_employees():
     try:
         with connection.cursor() as cursor:
             cursor.execute("""
-                SELECT *
+                SELECT
+                    employee_id,
+                    employee_name,
+                    email,
+                    department,
+                    salary,
+                    department_id
                 FROM employees
-                ORDER BY employee_id;
+                ORDER BY salary DESC;
             """)
 
             return cursor.fetchall()
@@ -65,24 +71,30 @@ def get_all_employees():
         connection.close()
 
 
-def update_employee(employee_id, salary):
+def update_employee(employee_id, name, email, department_id, salary):
     connection = get_connection()
 
     try:
         with connection.cursor() as cursor:
             cursor.execute("""
                 UPDATE employees
-                SET salary = %s
-                WHERE employee_id = %s;
-            """, (salary, employee_id))
+                SET
+                    employee_name = %s,
+                    email = %s,
+                    department_id = %s,
+                    salary = %s
+                WHERE employee_id = %s
+                RETURNING employee_id;
+            """, (name, email, department_id, salary, employee_id))
 
-        connection.commit()
-        return True
+            result = cursor.fetchone()
+            connection.commit()
 
-    except Exception as error:
+            return result[0] if result else None
+
+    except Exception:
         connection.rollback()
-        print("Error updating employee:", error)
-        return False
+        raise
 
     finally:
         connection.close()
@@ -95,35 +107,66 @@ def delete_employee(employee_id):
         with connection.cursor() as cursor:
             cursor.execute("""
                 DELETE FROM employees
-                WHERE employee_id = %s;
+                WHERE employee_id = %s
+                RETURNING employee_id;
             """, (employee_id,))
 
-        connection.commit()
-        return True
+            result = cursor.fetchone()
+            connection.commit()
 
-    except Exception as error:
+            return result[0] if result else None
+
+    except Exception:
         connection.rollback()
-        print("Error deleting employee:", error)
-        return False
+        raise
 
     finally:
         connection.close()
 
 
-def search_employee(search_text):
+def search_employee(search_term):
     connection = get_connection()
 
     try:
         with connection.cursor() as cursor:
             cursor.execute("""
-                SELECT *
+                SELECT
+                    employee_id,
+                    employee_name,
+                    email,
+                    department,
+                    salary,
+                    department_id
                 FROM employees
                 WHERE employee_name ILIKE %s
-                   OR email ILIKE %s;
-            """, (
-                f"%{search_text}%",
-                f"%{search_text}%"
-            ))
+                   OR email ILIKE %s
+                ORDER BY employee_name;
+            """, (f"%{search_term}%", f"%{search_term}%"))
+
+            return cursor.fetchall()
+
+    finally:
+        connection.close()
+
+
+def get_employees_with_departments():
+    connection = get_connection()
+
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT
+                    e.employee_id,
+                    e.employee_name,
+                    e.email,
+                    e.department,
+                    e.salary,
+                    e.department_id
+                FROM employees e
+                JOIN departments d
+                    ON e.department_id = d.department_id
+                ORDER BY e.salary DESC;
+            """)
 
             return cursor.fetchall()
 

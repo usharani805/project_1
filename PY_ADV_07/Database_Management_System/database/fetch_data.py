@@ -12,7 +12,8 @@ with connection.cursor() as cursor:
             department,
             salary,
             department_id
-        FROM employees;
+        FROM employees
+        ORDER BY salary DESC;
     """)
 
     employees = cursor.fetchall()
