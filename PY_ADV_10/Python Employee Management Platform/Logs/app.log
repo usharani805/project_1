@@ -1,0 +1,25 @@
+2026-09-04 12:20:25,038 - WARNING -  * Debugger is active!
+2026-09-04 12:20:25,045 - INFO -  * Debugger PIN: 146-184-287
+2026-09-04 12:27:59,970 - INFO -  * Detected change in 'C:\\Users\\HP\\Desktop\\project 1\\PY_ADV_10\\Python Employee Management Platform\\employee_analysis.py', reloading
+2026-09-04 12:28:00,807 - WARNING -  * Debugger is active!
+2026-09-04 12:28:00,811 - INFO -  * Debugger PIN: 146-184-287
+2026-09-04 13:02:21,458 - INFO - Employee created: 201
+2026-09-04 13:02:21,462 - INFO - Employee searched: 201
+2026-09-04 13:02:21,477 - INFO - Employee deleted: 201
+2026-09-04 13:02:21,479 - INFO - Employee searched: 201
+2026-09-04 13:02:21,482 - INFO - Employee list retrieved
+2026-09-04 13:02:21,490 - INFO - Employee searched: 201
+2026-09-04 13:02:21,495 - INFO - Employee updated: 201
+2026-09-04 13:02:21,496 - INFO - Employee searched: 201
+2026-09-04 13:04:49,563 - INFO - Employee created: 201
+2026-09-04 13:04:49,565 - INFO - Employee searched: 201
+2026-09-04 13:04:49,595 - INFO - Employee created: 201
+2026-09-04 13:04:49,610 - INFO - Employee deleted: 201
+2026-09-04 13:04:49,612 - INFO - Employee searched: 201
+2026-09-04 13:04:49,627 - INFO - Employee created: 201
+2026-09-04 13:04:49,628 - INFO - Employee list retrieved
+2026-09-04 13:04:49,659 - INFO - Employee created: 201
+2026-09-04 13:04:49,662 - INFO - Employee searched: 201
+2026-09-04 13:04:49,689 - INFO - Employee created: 201
+2026-09-04 13:04:49,704 - INFO - Employee updated: 201
+2026-09-04 13:04:49,706 - INFO - Employee searched: 201
